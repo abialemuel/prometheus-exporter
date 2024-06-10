@@ -21,6 +21,9 @@ echo "machine gitlab.playcourt.id login <USER> password <PASSWORD OR TOKEN>" > ~
 
 ## Usage
 
+### Blackbox & SNMP Config
+copy this templates [Blackbox Config](./blackbox/blackbox.yml) and [Snmp config][./snmp/snmp.yml] to your project as default configuration for snmp and blackbox module
+
 ### Blackbox Exporter
 To use the Blackbox exporter as a library, you need to import it in your Go application:
 
@@ -63,6 +66,8 @@ fmt.Printf("Probe result: %v\n", result)
 
 ### SNMP Exporter
 To use the Blackbox exporter as a library, you need to import it in your Go application:
+
+<!-- TODO SNMP Exporter example -->
 
 ```go
 import "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp"
