@@ -1,0 +1,810 @@
+# WARNING: This file was auto-generated using snmp_exporter generator, manual changes will be lost.
+auths:
+  public_v1:
+    community: public
+    security_level: noAuthNoPriv
+    auth_protocol: MD5
+    priv_protocol: DES
+    version: 1
+  public_v2:
+    community: public
+    security_level: noAuthNoPriv
+    auth_protocol: MD5
+    priv_protocol: DES
+    version: 2
+modules:
+  general_node:
+    walk:
+    - 1.3.6.1.2.1.1.1
+    - 1.3.6.1.2.1.1.3
+    - 1.3.6.1.2.1.1.4
+    - 1.3.6.1.2.1.1.5
+    - 1.3.6.1.2.1.1.6
+    - 1.3.6.1.2.1.1.7
+    - 1.3.6.1.2.1.2.2.1.3
+    - 1.3.6.1.2.1.2.2.1.5
+    - 1.3.6.1.2.1.2.2.1.6
+    - 1.3.6.1.2.1.2.2.1.7
+    - 1.3.6.1.2.1.2.2.1.8
+    - 1.3.6.1.2.1.31.1.1.1.1
+    - 1.3.6.1.2.1.31.1.1.1.15
+    - 1.3.6.1.2.1.31.1.1.1.16
+    - 1.3.6.1.2.1.31.1.1.1.17
+    - 1.3.6.1.2.1.31.1.1.1.18
+    - 1.3.6.1.2.1.4.20.1.2
+    - 1.3.6.1.2.1.4.20.1.3
+    metrics:
+    - name: sysDescr
+      oid: 1.3.6.1.2.1.1.1
+      type: DisplayString
+    - name: sysUpTime
+      oid: 1.3.6.1.2.1.1.3
+      type: gauge
+    - name: sysContact
+      oid: 1.3.6.1.2.1.1.4
+      type: DisplayString
+    - name: sysName
+      oid: 1.3.6.1.2.1.1.5
+      type: DisplayString
+    - name: sysLocation
+      oid: 1.3.6.1.2.1.1.6
+      type: DisplayString
+    - name: sysServices
+      oid: 1.3.6.1.2.1.1.7
+      type: gauge
+    - name: ifType
+      oid: 1.3.6.1.2.1.2.2.1.3
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifPhysAddress
+      oid: 1.3.6.1.2.1.2.2.1.6
+      type: PhysAddress48
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifAdminStatus
+      oid: 1.3.6.1.2.1.2.2.1.7
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifOperStatus
+      oid: 1.3.6.1.2.1.2.2.1.8
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifName
+      oid: 1.3.6.1.2.1.31.1.1.1.1
+      type: DisplayString
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifSpeed
+      oid: 1.3.6.1.2.1.2.2.1.5
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHighSpeed
+      oid: 1.3.6.1.2.1.31.1.1.1.15
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifPromiscuousMode
+      oid: 1.3.6.1.2.1.31.1.1.1.16
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifConnectorPresent
+      oid: 1.3.6.1.2.1.31.1.1.1.17
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifAlias
+      oid: 1.3.6.1.2.1.31.1.1.1.18
+      type: OctetString
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ipAdEntIfIndex
+      oid: 1.3.6.1.2.1.4.20.1.2
+      type: gauge
+      indexes:
+      - labelname: ipAdEntAddr
+        type: InetAddressIPv4
+    - name: ipAdEntNetMask
+      oid: 1.3.6.1.2.1.4.20.1.3
+      type: InetAddressIPv4
+      indexes:
+      - labelname: ipAdEntAddr
+        type: InetAddressIPv4
+    timeout: 5s
+    version: 2
+    auth:
+      community: "public"
+  if_mib:
+    walk:
+    - 1.3.6.1.2.1.2.2.1.5
+    - 1.3.6.1.2.1.2.2.1.6
+    - 1.3.6.1.2.1.2.2.1.3
+    - 1.3.6.1.2.1.31.1.1
+    - 1.3.6.1.2.1.2.2.1.7
+    - 1.3.6.1.2.1.2.2.1.8
+    - 1.3.6.1.2.1.2.2.1.10
+    - 1.3.6.1.2.1.2.2.1.13
+    - 1.3.6.1.2.1.2.2.1.14
+    - 1.3.6.1.2.1.2.2.1.16
+    - 1.3.6.1.2.1.2.2.1.19
+    - 1.3.6.1.2.1.2.2.1.20
+    metrics:
+    - name: ifPhysAddress
+      oid: 1.3.6.1.2.1.2.2.1.6
+      type: PhysAddress48
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifName
+      oid: 1.3.6.1.2.1.31.1.1.1.1
+      type: DisplayString
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifType
+      oid: 1.3.6.1.2.1.2.2.1.3
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifAdminStatus
+      oid: 1.3.6.1.2.1.2.2.1.7
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifOperStatus
+      oid: 1.3.6.1.2.1.2.2.1.8
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifInMulticastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.2
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifInBroadcastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.3
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifOutMulticastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.4
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifOutBroadcastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.5
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHCInOctets
+      oid: 1.3.6.1.2.1.31.1.1.1.6
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHCInUcastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.7
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHCInMulticastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.8
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHCInBroadcastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.9
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHCOutOctets
+      oid: 1.3.6.1.2.1.31.1.1.1.10
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHCOutUcastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.11
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHCOutMulticastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.12
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHCOutBroadcastPkts
+      oid: 1.3.6.1.2.1.31.1.1.1.13
+      type: counter
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifLinkUpDownTrapEnable
+      oid: 1.3.6.1.2.1.31.1.1.1.14
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifSpeed
+      oid: 1.3.6.1.2.1.2.2.1.5
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifHighSpeed
+      oid: 1.3.6.1.2.1.31.1.1.1.15
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifPromiscuousMode
+      oid: 1.3.6.1.2.1.31.1.1.1.16
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifConnectorPresent
+      oid: 1.3.6.1.2.1.31.1.1.1.17
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifAlias
+      oid: 1.3.6.1.2.1.31.1.1.1.18
+      type: OctetString
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifCounterDiscontinuityTime
+      oid: 1.3.6.1.2.1.31.1.1.1.19
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifInOctets
+      oid: 1.3.6.1.2.1.2.2.1.10
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifInDiscards
+      oid: 1.3.6.1.2.1.2.2.1.13
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifInErrors
+      oid: 1.3.6.1.2.1.2.2.1.14
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifOutOctets
+      oid: 1.3.6.1.2.1.2.2.1.16
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifOutDiscards
+      oid: 1.3.6.1.2.1.2.2.1.19
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    - name: ifOutErrors
+      oid: 1.3.6.1.2.1.2.2.1.20
+      type: gauge
+      indexes:
+      - labelname: ifIndex
+        type: gauge
+    timeout: 5s
+    version: 2
+    auth:
+      community: "public"
+  system_status:
+    walk:
+    - 1.3.6.1.2.1.25.2.2
+    - 1.3.6.1.2.1.25.2.3
+    - 1.3.6.1.2.1.25.3.3.1.2
+    - 1.3.6.1.2.1.25.5.1.1.2
+    - 1.3.6.1.4.1.9.9.10.1.1.4.1.1.4
+    - 1.3.6.1.4.1.9.9.10.1.1.4.1.1.5
+    - 1.3.6.1.4.1.9.9.10.1.1.4.1.1.10
+    - 1.3.6.1.4.1.9.9.10.1.1.4.1.1.13
+    - 1.3.6.1.4.1.9.9.10.1.1.4.1.1.14
+    - 1.3.6.1.4.1.9.9.109.1.1.1.1.4
+    - 1.3.6.1.4.1.9.9.109.1.1.1.1.5
+    - 1.3.6.1.4.1.9.9.109.1.1.1.1.7
+    - 1.3.6.1.4.1.9.9.109.1.1.1.1.12
+    - 1.3.6.1.4.1.9.9.109.1.1.1.1.13
+    - 1.3.6.1.4.1.9.9.48.1.1.1.2
+    - 1.3.6.1.4.1.9.9.48.1.1.1.5
+    - 1.3.6.1.4.1.9.9.48.1.1.1.6
+    - 1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.1
+    - 1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.2
+    - 1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.12
+    - 1.3.6.1.4.1.2636.3.1.13.1.5.9
+    - 1.3.6.1.4.1.2636.3.1.13.1.8.9
+    - 1.3.6.1.4.1.2636.3.1.13.1.15.9
+    - 1.3.6.1.4.1.2636.3.1.13.1.11.9
+    - 1.3.6.1.4.1.12356.101.4.1.3
+    - 1.3.6.1.4.1.12356.101.4.1.4
+    - 1.3.6.1.4.1.12356.101.4.1.5
+    - 1.3.6.1.4.1.12356.101.4.1.6
+    - 1.3.6.1.4.1.12356.101.4.1.7
+    - 1.3.6.1.4.1.11.2.14.11.5.1.9.6.1
+    - 1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.6
+    - 1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.5
+    - 1.3.6.1.4.1.2011.10.2.6.1.1.1.1.6
+    - 1.3.6.1.4.1.2011.10.2.6.1.1.1.1.8
+    - 1.3.6.1.4.1.2011.10.2.6.1.1.1.1.10
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+    - 1.3.6.1.4.1.25506.2.6.1.1.1.1.10
+    - 1.3.6.1.4.1.4881.1.1.10.2.35.1.1.1
+    - 1.3.6.1.4.1.4881.1.1.10.2.36.1.1
+    - 1.3.6.1.4.1.4881.1.1.10.2.11.1
+    metrics:
+    - name: hrMemorySize
+      oid: 1.3.6.1.2.1.25.2.2
+      type: gauge
+    - name: hrStorageIndex
+      oid: 1.3.6.1.2.1.25.2.3.1.1
+      type: gauge
+      indexes:
+      - labelname: hrStorageDescr
+        type: gauge
+      lookups:
+      - labels:
+        - hrStorageDescr
+        labelname: hrStorageDescr
+        oid: 1.3.6.1.2.1.25.2.3.1.3
+        type: DisplayString
+    - name: hrStorageType
+      oid: 1.3.6.1.2.1.25.2.3.1.2
+      type: DisplayString
+      indexes:
+      - labelname: hrStorageDescr
+        type: gauge
+      lookups:
+      - labels:
+        - hrStorageDescr
+        labelname: hrStorageDescr
+        oid: 1.3.6.1.2.1.25.2.3.1.3
+        type: DisplayString
+    - name: hrStorageDescr
+      oid: 1.3.6.1.2.1.25.2.3.1.3
+      type: DisplayString
+      indexes:
+      - labelname: hrStorageDescr
+        type: gauge
+      lookups:
+      - labels:
+        - hrStorageDescr
+        labelname: hrStorageDescr
+        oid: 1.3.6.1.2.1.25.2.3.1.3
+        type: DisplayString
+    - name: hrStorageAllocationUnits
+      oid: 1.3.6.1.2.1.25.2.3.1.4
+      type: gauge
+      indexes:
+      - labelname: hrStorageDescr
+        type: gauge
+      lookups:
+      - labels:
+        - hrStorageDescr
+        labelname: hrStorageDescr
+        oid: 1.3.6.1.2.1.25.2.3.1.3
+        type: DisplayString
+    - name: hrStorageSize
+      oid: 1.3.6.1.2.1.25.2.3.1.5
+      type: gauge
+      indexes:
+      - labelname: hrStorageDescr
+        type: gauge
+      lookups:
+      - labels:
+        - hrStorageDescr
+        labelname: hrStorageDescr
+        oid: 1.3.6.1.2.1.25.2.3.1.3
+        type: DisplayString
+    - name: hrStorageUsed
+      oid: 1.3.6.1.2.1.25.2.3.1.6
+      type: gauge
+      indexes:
+      - labelname: hrStorageDescr
+        type: gauge
+      lookups:
+      - labels:
+        - hrStorageDescr
+        labelname: hrStorageDescr
+        oid: 1.3.6.1.2.1.25.2.3.1.3
+        type: DisplayString
+    - name: hrStorageAllocationFailures
+      oid: 1.3.6.1.2.1.25.2.3.1.7
+      type: counter
+      indexes:
+      - labelname: hrStorageDescr
+        type: gauge
+      lookups:
+      - labels:
+        - hrStorageDescr
+        labelname: hrStorageDescr
+        oid: 1.3.6.1.2.1.25.2.3.1.3
+        type: DisplayString
+    - name: hrProcessorLoad
+      oid: 1.3.6.1.2.1.25.3.3.1.2
+      type: gauge
+      indexes:
+      - labelname: hrDeviceIndex
+        type: gauge
+    - name: cpmCPUTotal1min
+      oid: 1.3.6.1.4.1.9.9.109.1.1.1.1.4
+      type: gauge
+      indexes:
+      - labelname: cpmCPUTotalIndex
+        type: gauge
+    - name: cpmCPUTotal1minRev
+      oid: 1.3.6.1.4.1.9.9.109.1.1.1.1.7
+      type: gauge
+      indexes:
+      - labelname: cpmCPUTotalIndex
+        type: gauge
+    - name: cpmCPUMemoryUsed
+      oid: 1.3.6.1.4.1.9.9.109.1.1.1.1.12
+      type: gauge
+      indexes:
+      - labelname: cpmCPUTotalIndex
+        type: gauge
+    - name: cpmCPUMemoryFree
+      oid: 1.3.6.1.4.1.9.9.109.1.1.1.1.13
+      type: gauge
+      indexes:
+      - labelname: cpmCPUTotalIndex
+        type: gauge
+    - name: ciscoFlashPartitionSize
+      oid: 1.3.6.1.4.1.9.9.10.1.1.4.1.1.4
+      type: gauge
+      indexes:
+      - labelname: index0
+        type: gauge
+      - labelname: index1
+        type: gauge
+      lookups:
+      - labels:
+        - index0
+        - index1
+        labelname: ciscoFlashPartitionName
+        oid: 1.3.6.1.4.1.9.9.10.1.1.4.1.1.10
+        type: DisplayString
+    - name: ciscoFlashPartitionFreeSpace
+      oid: 1.3.6.1.4.1.9.9.10.1.1.4.1.1.5
+      type: gauge
+      indexes:
+      - labelname: index0
+        type: gauge
+      - labelname: index1
+        type: gauge
+      lookups:
+      - labels:
+        - index0
+        - index1
+        labelname: ciscoFlashPartitionName
+        oid: 1.3.6.1.4.1.9.9.10.1.1.4.1.1.10
+        type: DisplayString
+    - name: ciscoFlashPartitionSizeExt
+      oid: 1.3.6.1.4.1.9.9.10.1.1.4.1.1.13
+      type: gauge
+      indexes:
+      - labelname: index0
+        type: gauge
+      - labelname: index1
+        type: gauge
+      lookups:
+      - labels:
+        - index0
+        - index1
+        labelname: ciscoFlashPartitionName
+        oid: 1.3.6.1.4.1.9.9.10.1.1.4.1.1.10
+        type: DisplayString
+    - name: ciscoFlashPartitionFreeSpaceExt
+      oid: 1.3.6.1.4.1.9.9.10.1.1.4.1.1.14
+      type: gauge
+      indexes:
+      - labelname: index0
+        type: gauge
+      - labelname: index1
+        type: gauge
+      lookups:
+      - labels:
+        - index0
+        - index1
+        labelname: ciscoFlashPartitionName
+        oid: 1.3.6.1.4.1.9.9.10.1.1.4.1.1.10
+        type: DisplayString
+    - name: ciscoMemoryPoolUsed
+      oid: 1.3.6.1.4.1.9.9.48.1.1.1.5
+      type: gauge
+      indexes:
+      - labelname: index
+        type: gauge
+      lookups:
+      - labels:
+        - index
+        labelname: ciscoMemoryPoolName
+        oid: 1.3.6.1.4.1.9.9.48.1.1.1.2
+        type: DisplayString
+    - name: ciscoMemoryPoolFree
+      oid: 1.3.6.1.4.1.9.9.48.1.1.1.6
+      type: gauge
+      indexes:
+      - labelname: index
+        type: gauge
+      lookups:
+      - labels:
+        - index
+        labelname: ciscoMemoryPoolName
+        oid: 1.3.6.1.4.1.9.9.48.1.1.1.2
+        type: DisplayString
+    - name: agentSwitchCpuProcessMemFree
+      oid: 1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.1
+      type: gauge
+    - name: agentSwitchCpuProcessMemAvailable
+      oid: 1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.2
+      type: gauge
+    - name: agentSwitchCpuProcessTotalUtilizationThreeHundred
+      oid: 1.3.6.1.4.1.674.10895.5000.2.6132.1.1.1.1.4.12
+      type: gauge
+    - name: jnxOperatingDescr
+      oid: 1.3.6.1.4.1.2636.3.1.13.1.5.9
+      type: DisplayString
+      indexes:
+      - labelname: jnxOperatingL1Index
+        type: gauge
+      - labelname: jnxOperatingL2Index
+        type: gauge
+      - labelname: jnxOperatingL3Index
+        type: gauge
+      lookups:
+      - labels:
+        - jnxOperatingL1Index
+        - jnxOperatingL2Index
+        - jnxOperatingL3Index
+        labelname: jnxOperatingDescr
+        oid: 1.3.6.1.4.1.2636.3.1.13.1.5.9
+        type: DisplayString
+    - name: jnxOperatingCPU
+      oid: 1.3.6.1.4.1.2636.3.1.13.1.8.9
+      type: gauge
+      indexes:
+      - labelname: jnxOperatingL1Index
+        type: gauge
+      - labelname: jnxOperatingL2Index
+        type: gauge
+      - labelname: jnxOperatingL3Index
+        type: gauge
+      lookups:
+      - labels:
+        - jnxOperatingL1Index
+        - jnxOperatingL2Index
+        - jnxOperatingL3Index
+        labelname: jnxOperatingDescr
+        oid: 1.3.6.1.4.1.2636.3.1.13.1.5.9
+        type: DisplayString
+    - name: jnxOperatingMemory
+      oid: 1.3.6.1.4.1.2636.3.1.13.1.15.9
+      type: gauge
+      indexes:
+      - labelname: jnxOperatingL1Index
+        type: gauge
+      - labelname: jnxOperatingL2Index
+        type: gauge
+      - labelname: jnxOperatingL3Index
+        type: gauge
+      lookups:
+      - labels:
+        - jnxOperatingL1Index
+        - jnxOperatingL2Index
+        - jnxOperatingL3Index
+        labelname: jnxOperatingDescr
+        oid: 1.3.6.1.4.1.2636.3.1.13.1.5.9
+        type: DisplayString
+    - name: jnxOperatingBuffer
+      oid: 1.3.6.1.4.1.2636.3.1.13.1.11.9
+      type: gauge
+      indexes:
+      - labelname: jnxOperatingL1Index
+        type: gauge
+      - labelname: jnxOperatingL2Index
+        type: gauge
+      - labelname: jnxOperatingL3Index
+        type: gauge
+      lookups:
+      - labels:
+        - jnxOperatingL1Index
+        - jnxOperatingL2Index
+        - jnxOperatingL3Index
+        labelname: jnxOperatingDescr
+        oid: 1.3.6.1.4.1.2636.3.1.13.1.5.9
+        type: DisplayString
+    - name: fgSysCpuUsage
+      oid: 1.3.6.1.4.1.12356.101.4.1.3
+      type: gauge
+      indexes:
+      - labelname: indexCPU
+        type: gauge
+    - name: fgSysMemUsage
+      oid: 1.3.6.1.4.1.12356.101.4.1.4
+      type: gauge
+      indexes:
+      - labelname: indexMem
+        type: gauge
+    - name: fgSysMemCapacity
+      oid: 1.3.6.1.4.1.12356.101.4.1.5
+      type: gauge
+      indexes:
+      - labelname: indexMem
+        type: gauge
+    - name: fgSysDiskUsage
+      oid: 1.3.6.1.4.1.12356.101.4.1.6
+      type: gauge
+      indexes:
+      - labelname: indexDisk
+        type: gauge
+    - name: fgSysDiskCapacity
+      oid: 1.3.6.1.4.1.12356.101.4.1.7
+      type: gauge
+      indexes:
+      - labelname: indexDisk
+        type: gauge
+    - name: hpSwitchCpuStat
+      oid: 1.3.6.1.4.1.11.2.14.11.5.1.9.6.1
+      type: gauge
+      indexes:
+      - labelname: indexCPU
+        type: gauge
+    - name: hpLocalMemFreeBytes
+      oid: 1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.6
+      type: gauge
+      indexes:
+      - labelname: indexMem
+        type: gauge
+    - name: hpLocalMemTotalBytes
+      oid: 1.3.6.1.4.1.11.2.14.11.5.1.1.2.1.1.1.5
+      type: gauge
+      indexes:
+      - labelname: indexMem
+        type: gauge
+    - name: h3cEntityExtCpuUsage
+      oid: 1.3.6.1.4.1.2011.10.2.6.1.1.1.1.6
+      type: gauge
+      indexes:
+      - labelname: indexCPU
+        type: gauge
+    - name: h3cEntityExtMemUsage
+      oid: 1.3.6.1.4.1.2011.10.2.6.1.1.1.1.8
+      type: gauge
+      indexes:
+      - labelname: indexMem
+        type: gauge
+    - name: h3cEntityExtMemSize
+      oid: 1.3.6.1.4.1.2011.10.2.6.1.1.1.1.10
+      type: gauge
+      indexes:
+      - labelname: indexMem
+        type: gauge
+    - name: hh3cEntityExtCpuUsage
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+      type: gauge
+      indexes:
+      - labelname: indexCPU
+        type: gauge
+    - name: hh3cEntityExtMemUsage
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+      type: gauge
+      indexes:
+      - labelname: indexMem
+        type: gauge
+    - name: hh3cEntityExtMemSize
+      oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.10
+      type: gauge
+      indexes:
+      - labelname: indexMem
+        type: gauge
+    - name: myMemoryPoolIndex
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.35.1.1.1.1
+      type: gauge
+    - name: myMemoryPoolName
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.35.1.1.1.2
+      type: DisplayString
+    - name: myMemoryPoolCurrentUtilization
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.35.1.1.1.3
+      type: gauge
+    - name: myMemoryPoolMaxCapacity
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.35.1.1.1.6
+      type: gauge
+    - name: myCPUUtilization5Min
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.36.1.1.3
+      type: gauge
+    - name: myFileSystemMaxRoom
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.11.1.2
+      type: gauge
+    - name: myFileSystemAvailableRoom
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.11.1.3
+      type: gauge
+    timeout: 5s
+    version: 2
+    auth:
+      community: "public"
+  diskio:
+    walk:
+    - 1.3.6.1.4.1.2021.13.15
+    metrics:
+    - name: diskIODevice
+      oid: 1.3.6.1.4.1.2021.13.15.1.1.2
+      type: DisplayString
+      indexes:
+      - labelname: diskIOIndex
+        type: gauge
+    - name: diskIOLA1
+      oid:  1.3.6.1.4.1.2021.13.15.1.1.9
+      type: gauge
+      indexes:
+      - labelname: diskIOIndex
+        type: gauge
+    - name: diskIOLA5
+      oid: 1.3.6.1.4.1.2021.13.15.1.1.10
+      type: gauge
+      indexes:
+      - labelname: diskIOIndex
+        type: gauge
+    - name: diskIOLA15
+      oid:  1.3.6.1.4.1.2021.13.15.1.1.11
+      type: gauge
+      indexes:
+      - labelname: diskIOIndex
+        type: gauge
+    - name: diskIONReadX
+      oid:  1.3.6.1.4.1.2021.13.15.1.1.12
+      type: counter
+      indexes:
+      - labelname: diskIOIndex
+        type: gauge
+    - name: diskIONWrittenX
+      oid:  1.3.6.1.4.1.2021.13.15.1.1.13
+      type: counter
+      indexes:
+      - labelname: diskIOIndex
+        type: gauge
+    timeout: 5s
+    version: 2
+    auth:
+      community: "public"
+
+
