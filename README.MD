@@ -22,7 +22,7 @@ echo "machine gitlab.playcourt.id login <USER> password <PASSWORD OR TOKEN>" > ~
 ## Usage
 
 ### Blackbox & SNMP Config
-copy this templates [Blackbox Config](./blackbox/blackbox.yml) and [Snmp config][./snmp/snmp.yml] to your project as default configuration for snmp and blackbox module
+copy this templates [Blackbox Config](./blackbox/blackbox.yml) and [Snmp config](./snmp/snmp.yml) to your project as default configuration for snmp and blackbox module
 
 ### Blackbox Exporter
 To use the Blackbox exporter as a library, you need to import it in your Go application:
