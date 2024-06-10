@@ -25,8 +25,8 @@ import (
 	"github.com/gosnmp/gosnmp"
 	io_prometheus_client "github.com/prometheus/client_model/go"
 
-	"gitlab.com/telkom/netmonk/prometheus-exporter/snmp/config"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/snmp/scraper"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp/config"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp/scraper"
 )
 
 func TestPduToSample(t *testing.T) {

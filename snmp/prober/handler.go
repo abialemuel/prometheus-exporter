@@ -9,9 +9,9 @@ import (
 	"github.com/go-kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/helper"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/snmp/collector"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/snmp/config"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/helper"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp/collector"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp/config"
 )
 
 const (

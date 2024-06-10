@@ -5,7 +5,7 @@ import (
 
 	io_prometheus_client "github.com/prometheus/client_model/go"
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/helper"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/helper"
 )
 
 func TestProbeResult(t *testing.T) {

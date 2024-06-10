@@ -25,7 +25,7 @@ echo "machine gitlab.playcourt.id login <USER> password <PASSWORD OR TOKEN>" > ~
 To use the Blackbox exporter as a library, you need to import it in your Go application:
 
 ```go
-import "gitlab.com/telkom/netmonk/prometheus-exporter/blackbox"
+import "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox"
 
 historyLimit := uint(100)
 timeoutOffset := 0.5
@@ -65,4 +65,4 @@ fmt.Printf("Probe result: %v\n", result)
 To use the Blackbox exporter as a library, you need to import it in your Go application:
 
 ```go
-import "gitlab.com/telkom/netmonk/prometheus-exporter/snmp"
+import "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp"

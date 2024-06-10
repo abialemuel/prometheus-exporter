@@ -25,7 +25,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	pconfig "github.com/prometheus/common/config"
 
-	"gitlab.com/telkom/netmonk/prometheus-exporter/blackbox/config"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
 )
 
 // validRRs checks a slice of RRs received from the server against a DNSRRValidator.

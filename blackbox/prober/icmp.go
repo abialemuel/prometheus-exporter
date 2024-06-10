@@ -30,7 +30,7 @@ import (
 	"golang.org/x/net/ipv4"
 	"golang.org/x/net/ipv6"
 
-	"gitlab.com/telkom/netmonk/prometheus-exporter/blackbox/config"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
 )
 
 var (

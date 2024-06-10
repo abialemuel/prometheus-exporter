@@ -21,7 +21,7 @@ import (
 	"github.com/go-kit/log/level"
 	ping "github.com/prometheus-community/pro-bing"
 	"github.com/prometheus/client_golang/prometheus"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/blackbox/config"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
 )
 
 func ProbeICMPQoS(_ context.Context, target string, module config.Module, registry *prometheus.Registry, logger log.Logger) (success bool) {

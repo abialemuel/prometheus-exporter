@@ -38,7 +38,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	pconfig "github.com/prometheus/common/config"
 
-	"gitlab.com/telkom/netmonk/prometheus-exporter/blackbox/config"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
 )
 
 func TestHTTPStatusCodes(t *testing.T) {

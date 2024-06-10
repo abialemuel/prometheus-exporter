@@ -6,10 +6,10 @@ import (
 	"github.com/go-kit/log"
 	promCfg "github.com/prometheus/common/config"
 	"github.com/prometheus/common/promlog"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/blackbox/config"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/blackbox/prober"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/helper"
 	proto "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/Proto/interfaces"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/prober"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/helper"
 )
 
 type blackbox struct {

@@ -21,8 +21,8 @@ import (
 	"strconv"
 	"time"
 
-	"gitlab.com/telkom/netmonk/prometheus-exporter/blackbox/config"
-	"gitlab.com/telkom/netmonk/prometheus-exporter/helper"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
+	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/helper"
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
