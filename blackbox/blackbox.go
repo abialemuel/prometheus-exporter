@@ -31,7 +31,7 @@ func New(historyLimit uint, timeoutOffset float64, logLevel string) (Blackbox, e
 	logger := promlog.New(&promlog.Config{Level: v})
 	rh := &prober.ResultHistory{MaxResults: historyLimit}
 	sc := &config.SafeConfig{C: &config.Config{}}
-	if err := sc.ReloadConfig("./blackbox/blackbox.yml", logger); err != nil {
+	if err := sc.ReloadConfig("blackbox.yml", logger); err != nil {
 		return nil, fmt.Errorf("error loading config: %w", err)
 	}
 

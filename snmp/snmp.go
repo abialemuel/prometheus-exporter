@@ -22,7 +22,7 @@ type Snmp interface {
 }
 
 var (
-	path          = "./snmp/snmp.yml"
+	path          = "snmp.yml"
 	expandEnvVars = false
 )
 
