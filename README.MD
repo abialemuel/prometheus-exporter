@@ -18,6 +18,10 @@ export GOPRIVATE=gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/*
 echo "machine gitlab.playcourt.id login <USER> password <PASSWORD OR TOKEN>" > ~/.netrc
 ```
 
+### Installation
+```sh
+go get gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter
+```
 
 ## Usage
 
