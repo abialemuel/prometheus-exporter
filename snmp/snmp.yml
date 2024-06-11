@@ -125,6 +125,7 @@ modules:
       - labelname: ipAdEntAddr
         type: InetAddressIPv4
     timeout: 5s
+    retries: 0
     version: 2
     auth:
       community: "public"
@@ -324,6 +325,7 @@ modules:
       - labelname: ifIndex
         type: gauge
     timeout: 5s
+    retries: 0
     version: 2
     auth:
       community: "public"
@@ -759,6 +761,7 @@ modules:
       oid: 1.3.6.1.4.1.4881.1.1.10.2.11.1.3
       type: gauge
     timeout: 5s
+    retries: 0
     version: 2
     auth:
       community: "public"
@@ -803,6 +806,7 @@ modules:
       - labelname: diskIOIndex
         type: gauge
     timeout: 5s
+    retries: 0
     version: 2
     auth:
       community: "public"
