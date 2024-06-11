@@ -18,7 +18,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"strconv"
 	"time"
 
 	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
@@ -161,27 +160,33 @@ func DebugOutput(module *config.Module, logBuffer *bytes.Buffer, registry *prome
 	return buf.String()
 }
 
-func getTimeout(r *http.Request, module config.Module, offset float64) (timeoutSeconds float64, err error) {
+func getTimeout(r *http.Request, module config.Module, timeout float64) (timeoutSeconds float64, err error) {
 	// If a timeout is configured via the Prometheus header, add it to the request.
-	if r != nil {
-		if v := r.Header.Get("X-Prometheus-Scrape-Timeout-Seconds"); v != "" {
-			var err error
-			timeoutSeconds, err = strconv.ParseFloat(v, 64)
-			if err != nil {
-				return 0, err
-			}
-		}
-	}
+	// if r != nil {
+	// 	if v := r.Header.Get("X-Prometheus-Scrape-Timeout-Seconds"); v != "" {
+	// 		var err error
+	// 		timeoutSeconds, err = strconv.ParseFloat(v, 64)
+	// 		if err != nil {
+	// 			return 0, err
+	// 		}
+	// 	}
+	// }
 
-	if timeoutSeconds == 0 {
-		timeoutSeconds = 120
-	}
+	// if timeoutSeconds == 0 {
+	// 	timeoutSeconds = 120
+	// }
 
-	var maxTimeoutSeconds = timeoutSeconds - offset
-	if module.Timeout.Seconds() < maxTimeoutSeconds && module.Timeout.Seconds() > 0 || maxTimeoutSeconds < 0 {
+	// var maxTimeoutSeconds = timeoutSeconds - offset
+	// if module.Timeout.Seconds() < maxTimeoutSeconds && module.Timeout.Seconds() > 0 || maxTimeoutSeconds < 0 {
+	// 	timeoutSeconds = module.Timeout.Seconds()
+	// } else {
+	// 	timeoutSeconds = maxTimeoutSeconds
+	// }
+
+	if timeout <= 0 {
 		timeoutSeconds = module.Timeout.Seconds()
 	} else {
-		timeoutSeconds = maxTimeoutSeconds
+		timeoutSeconds = timeout
 	}
 
 	return timeoutSeconds, nil
