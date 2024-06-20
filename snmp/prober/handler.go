@@ -66,6 +66,9 @@ func Call(target string, moduleNames []string, c *config.SafeConfig, auth config
 	// 	*authName = "public_v2"
 	// }
 
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeoutOffset*float64(time.Second)))
+	defer cancel()
+
 	c.RLock()
 	var nmodules []*collector.NamedModule
 	for _, m := range moduleNames {
@@ -92,7 +95,7 @@ func Call(target string, moduleNames []string, c *config.SafeConfig, auth config
 	logger = log.With(logger, "auth", c.C.Auths, "target", target)
 	registry := prometheus.NewRegistry()
 	authName := fmt.Sprintf("version: %d, securityLevel: %s", auth.Version, auth.SecurityLevel)
-	col := collector.New(context.Background(), target, authName, &auth, nmodules, logger, exporterMetrics, config.Concurrency)
+	col := collector.New(ctx, target, authName, &auth, nmodules, logger, exporterMetrics, config.Concurrency)
 	registry.MustRegister(col)
 
 	// Gather metrics
