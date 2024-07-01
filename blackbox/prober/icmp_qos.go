@@ -129,11 +129,9 @@ func ProbeICMPQoS(_ context.Context, target string, module config.Module, regist
 		return false
 	}
 
-	if onWindows() {
-		pinger.SetPrivileged(true)
-	}
-
 	perThousand := float64(1000)
+
+	pinger.SetPrivileged(true)
 
 	pinger.Count = module.ICMPQOS.Count
 	pinger.Size = module.ICMPQOS.PacketSize // in bytes
