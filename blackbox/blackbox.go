@@ -77,7 +77,7 @@ func (c *blackbox) Call(target string, moduleName string, data *proto.WorkerProb
 			PacketSize: int(icmpQosConfig.PacketSize),
 			Count:      int(icmpQosConfig.Count),
 			Interval:   int(icmpQosConfig.Interval),
-			Timeout:    (int(icmpQosConfig.Count) * int(icmpQosConfig.Interval)) + int(icmpQosConfig.Interval),
+			Timeout:    int(icmpQosConfig.Timeout),
 			TTL:        config.DefaultICMPQoSProbe.TTL,
 		}
 	}
