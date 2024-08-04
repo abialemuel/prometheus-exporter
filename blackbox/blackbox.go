@@ -3,13 +3,13 @@ package blackbox
 import (
 	"fmt"
 
+	"github.com/abialemuel/prometheus-exporter/blackbox/config"
+	"github.com/abialemuel/prometheus-exporter/blackbox/prober"
+	"github.com/abialemuel/prometheus-exporter/helper"
 	"github.com/go-kit/log"
 	promCfg "github.com/prometheus/common/config"
 	"github.com/prometheus/common/promlog"
 	proto "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/Proto/interfaces"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/prober"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/helper"
 )
 
 type blackbox struct {

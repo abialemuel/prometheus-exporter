@@ -20,7 +20,7 @@ echo "machine gitlab.playcourt.id login <USER> password <PASSWORD OR TOKEN>" > ~
 
 ### Installation
 ```sh
-go get gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter
+go get github.com/abialemuel/prometheus-exporter
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ copy this templates [Blackbox Config](./blackbox/blackbox.yml) and [Snmp config]
 To use the Blackbox exporter as a library, you need to import it in your Go application:
 
 ```go
-import "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox"
+import "github.com/abialemuel/prometheus-exporter/blackbox"
 
 historyLimit := uint(100)
 timeoutOffset := 0.5
@@ -74,4 +74,4 @@ To use the Blackbox exporter as a library, you need to import it in your Go appl
 <!-- TODO SNMP Exporter example -->
 
 ```go
-import "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp"
+import "github.com/abialemuel/prometheus-exporter/snmp"

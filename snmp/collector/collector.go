@@ -30,8 +30,8 @@ import (
 	"github.com/gosnmp/gosnmp"
 	"github.com/prometheus/client_golang/prometheus"
 
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp/config"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp/scraper"
+	"github.com/abialemuel/prometheus-exporter/snmp/config"
+	"github.com/abialemuel/prometheus-exporter/snmp/scraper"
 )
 
 var (

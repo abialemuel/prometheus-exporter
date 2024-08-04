@@ -17,11 +17,11 @@ import (
 	"context"
 	"time"
 
+	"github.com/abialemuel/prometheus-exporter/blackbox/config"
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 	ping "github.com/prometheus-community/pro-bing"
 	"github.com/prometheus/client_golang/prometheus"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
 )
 
 func ProbeICMPQoS(_ context.Context, target string, module config.Module, registry *prometheus.Registry, logger log.Logger) (success bool) {

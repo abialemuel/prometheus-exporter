@@ -3,9 +3,9 @@ package helper_test
 import (
 	"testing"
 
+	"github.com/abialemuel/prometheus-exporter/helper"
 	io_prometheus_client "github.com/prometheus/client_model/go"
 	"github.com/stretchr/testify/assert"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/helper"
 )
 
 func TestProbeResult(t *testing.T) {

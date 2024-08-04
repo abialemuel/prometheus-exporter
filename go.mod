@@ -1,4 +1,4 @@
-module gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter
+module github.com/abialemuel/prometheus-exporter
 
 go 1.22.0
 

@@ -3,12 +3,12 @@ package snmp
 import (
 	"fmt"
 
+	"github.com/abialemuel/prometheus-exporter/helper"
+	"github.com/abialemuel/prometheus-exporter/snmp/config"
+	"github.com/abialemuel/prometheus-exporter/snmp/prober"
 	"github.com/go-kit/log"
 	"github.com/prometheus/common/promlog"
 	proto "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/Proto/interfaces"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/helper"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp/config"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/snmp/prober"
 )
 
 type snmp struct {

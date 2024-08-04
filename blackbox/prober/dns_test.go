@@ -25,7 +25,7 @@ import (
 	"github.com/miekg/dns"
 	"github.com/prometheus/client_golang/prometheus"
 
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
+	"github.com/abialemuel/prometheus-exporter/blackbox/config"
 )
 
 var PROTOCOLS = [...]string{"udp", "tcp"}

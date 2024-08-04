@@ -24,10 +24,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/abialemuel/prometheus-exporter/blackbox/config"
 	"github.com/go-kit/log"
 	"github.com/prometheus/client_golang/prometheus"
 	pconfig "github.com/prometheus/common/config"
-	"gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/prometheus-exporter/blackbox/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
