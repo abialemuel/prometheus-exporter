@@ -11,13 +11,6 @@ The SNMP (Simple Network Management Protocol) exporter is a powerful tool that a
 
 
 ## Getting Started
-To give Git credentials, you’ll need to have a .netrc that includes gitlab.playcourt.id in your home directory.
-```shell
-export GOPROXY=https://proxy.golang.org,direct
-export GOPRIVATE=gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/*
-echo "machine gitlab.playcourt.id login <USER> password <PASSWORD OR TOKEN>" > ~/.netrc
-```
-
 ### Installation
 ```sh
 go get github.com/abialemuel/prometheus-exporter

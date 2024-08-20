@@ -1,0 +1,69 @@
+syntax = "proto3";
+package interfaces;
+option go_package = "github.com/abialemuel/prometheus-exporter/messages;interfaces";
+
+// The public message, for example, a message that is sent to all clients.
+message PublicMsg {
+  string Message = 1; //@gotags: json:"message,omitempty"
+  string LastUpdated = 2; //@gotags: json:"lastUpdated,omitempty"
+}
+
+message CollectDataMsg {
+  string Exporter = 1; //@gotags: json:"exporter,omitempty"
+  string Module = 2; //@gotags: json:"module,omitempty"
+  string Target = 3; //@gotags: json:"target,omitempty"
+}
+
+message Module {
+  string Name = 1; //@gotags: json:"name,omitempty"
+  map<string, string> Config = 2; //@gotags: json:"config,omitempty"
+}
+
+message NodeConfig {
+  int32 Version = 1; //@gotags: json:"version,omitempty"
+  string Community = 2; //@gotags: json:"community,omitempty"
+  string SecurityLevel = 3; //@gotags: json:"securityLevel,omitempty"
+  string Username = 4; //@gotags: json:"username,omitempty"
+  string Password = 5; //@gotags: json:"password,omitempty"
+  string AuthProtocol = 6; //@gotags: json:"authProtocol,omitempty"
+  string PrivProtocol = 7; //@gotags: json:"privProtocol,omitempty"
+  string PrivPassword = 8; //@gotags: json:"privPassword,omitempty"
+  string ContextName = 9; //@gotags: json:"contextName,omitempty"
+  int32 Timeout = 10; //@gotags: json:"timeout,omitempty"
+}
+
+message Authorization {
+  string Username = 1; //@gotags: json:"username,omitempty"
+  string Password = 2; //@gotags: json:"password,omitempty"
+}
+
+message WebsiteConfig {
+  string Method = 1; //@gotags: json:"method,omitempty"
+  Authorization Authorization = 2; //@gotags: json:"authorization,omitempty"
+  map<string, string> Headers = 3; //@gotags: json:"headers,omitempty"
+  string Body = 4; //@gotags: json:"body,omitempty"
+}
+
+message ICMPQOSConfig {
+  int32 PacketSize = 1; //gotags: json:"packet_size,omitempty"
+  int32 Interval = 2; //gotags: json:"interval,omitempty"
+  int32 Count = 3; //gotags: json:"count,omitempty"
+  int32 Timeout = 4; //gotags: json:"timeout,omitempty"
+}
+
+message WorkerProbe {
+  string ProbeId = 1; //@gotags: json:"probeId,omitempty"
+  string CostumerId = 2; //@gotags: json:"costumerId,omitempty"
+  string UserGroupInventoryId = 3; //@gotags: json:"userGroupInventoryId,omitempty"
+  string NodeId = 4; //@gotags: json:"nodeId,omitempty"
+  string Ip = 5; //@gotags: json:"ip,omitempty"
+  int32 Interval = 6; //@gotags: json:"interval,omitempty"
+  repeated Module Modules = 7; //@gotags: json:"modules,omitempty"
+  //@gotags: json:"probe_config,omitempty"
+  oneof ProbeConfig {
+    NodeConfig Node = 8; //@gotags: json:"node,omitempty"
+    WebsiteConfig Website = 9; //@gotags: json:"website,omitempty"
+    ICMPQOSConfig ICMPQOS = 10; //@gotags: json:"icmpQos,omitempty"
+  }
+  int64 LastUpdated = 11; //@gotags: json:"lastUpdated,omitempty"
+}

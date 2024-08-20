@@ -6,10 +6,10 @@ import (
 	"github.com/abialemuel/prometheus-exporter/blackbox/config"
 	"github.com/abialemuel/prometheus-exporter/blackbox/prober"
 	"github.com/abialemuel/prometheus-exporter/helper"
+	proto "github.com/abialemuel/prometheus-exporter/messages"
 	"github.com/go-kit/log"
 	promCfg "github.com/prometheus/common/config"
 	"github.com/prometheus/common/promlog"
-	proto "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/Proto/interfaces"
 )
 
 type blackbox struct {
@@ -72,6 +72,16 @@ func (c *blackbox) Call(target string, moduleName string, data *proto.WorkerProb
 
 	icmpQosConfig := data.GetICMPQOS()
 	if icmpQosConfig != nil {
+		// inject icmp qos for module
+		if icmpQosConfig.Timeout == 0 {
+			// in milliseconds
+			icmpQosConfig.Timeout = int32(c.timeoutOffset * 1000)
+		} else {
+			// in milliseconds
+			icmpQosConfig.Timeout = int32(icmpQosConfig.Timeout * 1000)
+
+		}
+
 		// inject icmp qos for module
 		module.ICMPQOS = config.ICMPQOSProbe{
 			PacketSize: int(icmpQosConfig.PacketSize),

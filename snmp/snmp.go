@@ -4,11 +4,11 @@ import (
 	"fmt"
 
 	"github.com/abialemuel/prometheus-exporter/helper"
+	proto "github.com/abialemuel/prometheus-exporter/messages"
 	"github.com/abialemuel/prometheus-exporter/snmp/config"
 	"github.com/abialemuel/prometheus-exporter/snmp/prober"
 	"github.com/go-kit/log"
 	"github.com/prometheus/common/promlog"
-	proto "gitlab.playcourt.id/telkom-digital/dpe/std/impl/netmonk/Proto/interfaces"
 )
 
 type snmp struct {
