@@ -31,49 +31,19 @@ func ProbeICMPQoS(_ context.Context, target string, module config.Module, regist
 		endDuration   time.Time
 		totalDuration time.Duration
 
-		// latencies helper
-		totalLatency time.Duration
-		maxLatency   time.Duration
-		minLatency   time.Duration
-		avgLatency   float64
-
 		// jitters
-		prevTime  float64
-		jitter    float64
-		jitterSum float64
-		jitterMax float64
-		jitterMin float64
+		prevTime  time.Duration
+		jitter    time.Duration
+		jitterSum time.Duration
+		jitterMax time.Duration
+		jitterMin time.Duration
 
-		// request counter
-		count int64
-		// probe_duration_seconds
-		probeQoSDurationSecondsSecond float64
-
-		//// Parsers to OpenMetrix data
-		// probe_qos_latency_gauge : aggregate [total, max, min, avg, standard_deviation]
-		probeQoSLatencyGaugeTotal             float64
-		probeQoSLatencyGaugeMax               float64
-		probeQoSLatencyGaugeMin               float64
-		probeQoSLatencyGaugeAvg               float64
-		probeQoSLatencyGaugeStandardDeviation float64
-
-		// probe_qos_packet_loss : total
-		probeQoSPacketLossSent           float64
-		probeQoSPacketLossReceived       float64
-		probeQoSPacketLossLossPercentage float64
-		probeQoSPacketLossLossCount      int64
-
-		// probe_qos_jitter_gauge : aggregate
-		probeQoSJitterGaugeTotalDiff float64
-		probeQoSJitterGaugeMaxDiff   float64
-		probeQoSJitterGaugeMinDiff   float64
-
-		// probe_qos_jitter
-		probeQoSJitterµs float64
-
-		// probe_qos_packet_count
-		probeQoSPacketCountInt float64
+		rttMapping map[int]time.Duration
+		seqMax     int
 	)
+
+	rttMapping = make(map[int]time.Duration)
+
 	// start duration benchmark
 	startDuration = time.Now()
 
@@ -89,7 +59,7 @@ func ProbeICMPQoS(_ context.Context, target string, module config.Module, regist
 	})
 
 	var probeQosLatencyGauge = prometheus.NewGaugeVec(prometheus.GaugeOpts{
-		Name: "probe_qos_latency_gauge",
+		Name: "probe_qos_latency",
 		Help: "Probe QoS Latency Gauge (all are in milliseconds)",
 	}, []string{"aggregate"})
 	for _, lv := range []string{"total", "min", "max", "avg", "standard_deviation"} {
@@ -97,7 +67,7 @@ func ProbeICMPQoS(_ context.Context, target string, module config.Module, regist
 	}
 
 	var probeQoSPacketLoss = prometheus.NewGaugeVec(prometheus.GaugeOpts{
-		Name: "probe_qos_packet_loss",
+		Name: "probe_qos_packet_loss_gauge",
 		Help: "Probe QoS Latency Packet Loss",
 	}, []string{"total"})
 	for _, lv := range []string{"sent", "received", "loss", "loss_percentage"} {
@@ -129,8 +99,6 @@ func ProbeICMPQoS(_ context.Context, target string, module config.Module, regist
 		return false
 	}
 
-	perThousand := float64(1000)
-
 	pinger.SetPrivileged(true)
 
 	pinger.Count = module.ICMPQOS.Count
@@ -150,132 +118,141 @@ func ProbeICMPQoS(_ context.Context, target string, module config.Module, regist
 	registry.MustRegister(probeQoSPacketCount)
 
 	pinger.OnRecvError = func(_ error) {
-		jitter = prevTime - (float64(pinger.Timeout.Nanoseconds()) / perThousand)
+		jitter = prevTime
+		jitter = pinger.Timeout - prevTime
 		if jitter < 0 {
 			jitter = -jitter
 		}
 		jitterSum += jitter
-		prevTime = float64(pinger.Timeout.Nanoseconds()) / perThousand
+		prevTime = pinger.Timeout
 		jitterMax = prevTime
 	}
 
 	pinger.OnRecv = func(pkt *ping.Packet) {
+		rttMapping[pkt.Seq] = pkt.Rtt
+		if pkt.Seq > seqMax {
+			seqMax = pkt.Seq
+		}
 		// jitter (in microseconds)
-		jitter = prevTime - float64(pkt.Rtt.Nanoseconds())/perThousand
+		jitter = pkt.Rtt - prevTime
 		if jitter < 0 {
 			jitter = -jitter
 		}
 		if jitter > jitterMax {
 			jitterMax = jitter
 		}
-		if jitterMin == 0 || jitter < jitterMin {
+		if jitter != 0 && jitter < jitterMin {
 			jitterMin = jitter
 		}
 		jitterSum += jitter
 
-		totalLatency += pkt.Rtt
-		if maxLatency < pkt.Rtt {
-			maxLatency = pkt.Rtt
-		}
-		if minLatency == 0 || minLatency > pkt.Rtt {
-			minLatency = pkt.Rtt
-		}
-		prevTime = float64(pkt.Rtt.Nanoseconds()) / perThousand
+		prevTime = pkt.Rtt
 	}
 
 	pinger.OnFinish = func(s *ping.Statistics) {
 
-		// probe_qos_packet_loss : total
-		probeQoSPacketLossSent = float64(s.PacketsSent)
-		probeQoSPacketLossReceived = float64(s.PacketsRecv)
-		probeQoSPacketLossLossPercentage = s.PacketLoss
-		probeQoSPacketLossLossCount = int64(s.PacketsSent - s.PacketsRecv)
+		var i int
+		var jitterCount int64
+		for i = 0; i <= seqMax; i++ {
 
-		count = int64(pinger.Count)
-
-		//// below line are added for making up the missing packets
-		////
-		totalLatency += (time.Duration(probeQoSPacketLossLossCount) * time.Microsecond) * pinger.Timeout
-
-		// microsecond to millisecond
-		if probeQoSPacketLossReceived > 0 {
-			avgLatency = float64(totalLatency.Microseconds()) / probeQoSPacketLossReceived / perThousand
-		} else {
-			// this happened if packet is 100% loss???
-			avgLatency = float64(totalLatency.Microseconds()/count) / perThousand
-		}
-
-		// probe_qos_latency_gauge : aggregate [total, max, min, avg, standard_deviation]
-		probeQoSLatencyGaugeTotal = float64(totalLatency.Microseconds()) / perThousand
-		probeQoSLatencyGaugeMax = float64(maxLatency.Microseconds()) / perThousand
-		probeQoSLatencyGaugeMin = float64(minLatency.Microseconds()) / perThousand
-		probeQoSLatencyGaugeAvg = avgLatency
-		probeQoSLatencyGaugeStandardDeviation = float64(s.StdDevRtt.Microseconds()) / perThousand
-
-		// probe_qos_jitter_gauge : aggregate
-		//// below line are added for the missing packet jitters
-		jitterSum += float64(pinger.Timeout.Microseconds() * probeQoSPacketLossLossCount)
-
-		probeQoSJitterGaugeTotalDiff = jitterSum
-		probeQoSJitterGaugeMaxDiff = jitterMax
-		probeQoSJitterGaugeMinDiff = jitterMin
-
-		// probe_qos_jitter
-		if probeQoSPacketLossReceived > 1 {
-			probeQoSJitterµs = jitterSum / (probeQoSPacketLossReceived - 1)
-		} else {
-			// only happen if 100% loss???
-			probeQoSJitterµs = jitterSum / float64(count-1)
+			if i == 0 {
+				jitterSum = 0
+				jitterMax = 0
+				jitterMin = pinger.Timeout
+			}
+			if rtt, ok := rttMapping[i]; ok {
+				_ = level.Debug(logger).Log("msg", "Ping Log",
+					"Sequence", i,
+					"RTT", rtt,
+				)
+				if i == 0 {
+					prevTime = rtt
+					continue
+				}
+				jitterCount++
+				jitter = prevTime - rtt
+				if jitter < 0 {
+					jitter = -jitter
+				}
+				jitterSum += jitter
+				if jitter < jitterMin {
+					jitterMin = jitter
+				}
+				if jitter > jitterMax {
+					jitterMax = jitter
+				}
+				prevTime = rtt
+			}
 		}
 
 		// probe_qos_packet_count
-		probeQoSPacketCountInt = float64(pinger.Count)
-		probeQoSPacketCount.Set(probeQoSPacketCountInt)
+		probeQoSPacketCount.Set(float64(pinger.Count))
 
-		probeQoSJitter.Set(probeQoSJitterµs)
-		probeQoSJitterGauge.WithLabelValues("total_diff").Add(probeQoSJitterGaugeTotalDiff)
-		probeQoSJitterGauge.WithLabelValues("max_diff").Add(probeQoSJitterGaugeMaxDiff)
-		probeQoSJitterGauge.WithLabelValues("min_diff").Add(probeQoSJitterGaugeMinDiff)
+		probeQoSPacketLoss.WithLabelValues("sent").Add(float64(s.PacketsSent))
+		probeQoSPacketLoss.WithLabelValues("received").Add(float64(s.PacketsRecv))
+		probeQoSPacketLoss.WithLabelValues("loss").Add(float64(s.PacketsSent - s.PacketsRecv))
+		probeQoSPacketLoss.WithLabelValues("loss_percentage").Add(s.PacketLoss)
 
-		probeQoSPacketLoss.WithLabelValues("sent").Add(probeQoSPacketLossSent)
-		probeQoSPacketLoss.WithLabelValues("received").Add(probeQoSPacketLossReceived)
-		probeQoSPacketLoss.WithLabelValues("loss").Add(float64(probeQoSPacketLossLossCount))
-		probeQoSPacketLoss.WithLabelValues("loss_percentage").Add(probeQoSPacketLossLossPercentage)
+		if jitterCount == 0 {
+			probeQoSJitter.Set(0)
+			probeQoSJitterGauge.WithLabelValues("total_diff").Add(0)
+			probeQoSJitterGauge.WithLabelValues("max_diff").Add(0)
+			probeQoSJitterGauge.WithLabelValues("min_diff").Add(0)
 
-		probeQosLatencyGauge.WithLabelValues("total").Add(probeQoSLatencyGaugeTotal)
-		probeQosLatencyGauge.WithLabelValues("max").Add(probeQoSLatencyGaugeMax)
-		probeQosLatencyGauge.WithLabelValues("min").Add(probeQoSLatencyGaugeMin)
-		probeQosLatencyGauge.WithLabelValues("avg").Add(probeQoSLatencyGaugeAvg)
-		probeQosLatencyGauge.WithLabelValues("standard_deviation").Add(probeQoSLatencyGaugeStandardDeviation)
+			probeQosLatencyGauge.WithLabelValues("total").Add(0)
+			probeQosLatencyGauge.WithLabelValues("max").Add(0)
+			probeQosLatencyGauge.WithLabelValues("min").Add(0)
+			probeQosLatencyGauge.WithLabelValues("avg").Add(0)
+			probeQosLatencyGauge.WithLabelValues("standard_deviation").Add(0)
+			_ = level.Info(logger).Log(
+				"msg", "ICMP Gauge summary",
+				"error", "100% packet loss",
+			)
+
+			return
+		}
+		probeQoSJitter.Set(float64(jitterSum.Nanoseconds()) / float64(jitterCount*1000))
+		probeQoSJitterGauge.WithLabelValues("total_diff").Add(float64(jitterSum.Nanoseconds()) / 1000)
+		probeQoSJitterGauge.WithLabelValues("max_diff").Add(float64(jitterMax.Nanoseconds()) / 1000)
+		probeQoSJitterGauge.WithLabelValues("min_diff").Add(float64(jitterMin.Nanoseconds()) / 1000)
+
+		var probeQosLatencyGaugeTotal time.Duration
+		for _, rtt := range s.Rtts {
+			probeQosLatencyGaugeTotal += rtt
+		}
+		probeQosLatencyGauge.WithLabelValues("total").Add(probeQosLatencyGaugeTotal.Seconds() * 1000)
+		probeQosLatencyGauge.WithLabelValues("max").Add(s.MaxRtt.Seconds() * 1000)
+		probeQosLatencyGauge.WithLabelValues("min").Add(s.MinRtt.Seconds() * 1000)
+		probeQosLatencyGauge.WithLabelValues("avg").Add(s.AvgRtt.Seconds() * 1000)
+		probeQosLatencyGauge.WithLabelValues("standard_deviation").Add(s.StdDevRtt.Seconds() * 1000)
 
 		// Logging the result
 		_ = level.Info(logger).Log("msg", "ICMP Gauge summary",
 			// packet loss
-			"packet_sent", probeQoSPacketLossSent,
-			"packet_received", probeQoSPacketLossReceived,
-			"packet_loss", probeQoSPacketLossLossCount,
-			"packet_loss_percentage", probeQoSPacketLossLossPercentage,
+			"packet_sent", s.PacketsSent,
+			"packet_received", s.PacketsRecv,
+			"packet_loss", s.PacketsSent-s.PacketsRecv,
+			"packet_loss_percentage", s.PacketLoss,
 
 			// latency
-			"latency_total", probeQoSLatencyGaugeTotal,
-			"latency_max", probeQoSLatencyGaugeMax,
-			"latency_min", probeQoSLatencyGaugeMin,
-			"latency_avg", probeQoSLatencyGaugeAvg,
-			"latency_std_deviation", probeQoSLatencyGaugeStandardDeviation,
+			"latency_total", probeQosLatencyGaugeTotal,
+			"latency_max", s.MaxRtt,
+			"latency_min", s.MinRtt,
+			"latency_avg", s.AvgRtt,
+			"latency_std_deviation", s.StdDevRtt,
 
 			// jitters
-			"jitters", probeQoSJitterµs,
-			"jitter_max", probeQoSJitterGaugeMaxDiff,
-			"jitter_min", probeQoSJitterGaugeMinDiff,
-			"jitter_total", probeQoSJitterGaugeTotalDiff,
+			"jitters", jitter,
+			"jitter_max", jitterMax,
+			"jitter_min", jitterMin,
+			"jitter_total", jitterSum,
 		)
 
 		// probe_duration_seconds
 		endDuration = time.Now()
 		totalDuration = endDuration.Sub(startDuration)
-		probeQoSDurationSecondsSecond = float64(totalDuration.Microseconds()) / (perThousand * perThousand)
-		probeQoSDurationSeconds.Set(probeQoSDurationSecondsSecond)
-		_ = level.Info(logger).Log("msg", "ICMP Execution duration", "duration", probeQoSDurationSecondsSecond)
+		probeQoSDurationSeconds.Set(totalDuration.Seconds())
+		_ = level.Info(logger).Log("msg", "ICMP Execution duration", "duration", totalDuration.Seconds())
 	}
 
 	err = pinger.Run()
